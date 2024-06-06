@@ -29,9 +29,15 @@ void cast_char(e_type type, std::string val, int x)
 		std::cout << c << std::endl;
 	else
 		std::cout << "Non displayable" << std::endl;
-	cast_int(type, val);
-	cast_float(val);
-	cast_double(val);
+	if (type == e_char)
+	{
+		std::stringstream ss;
+		ss << (static_cast<int>(c));
+		std::string new_val = ss.str();
+		cast_int(type, new_val);
+		cast_float(new_val);
+		cast_double(new_val);
+	}
 }
 
 void cast_int(e_type type, std::string val)
@@ -59,13 +65,9 @@ void cast_float(std::string val)
 	float num;
 
 	if (ss >> num)
-	{
 		std::cout << "float: " << num << ((num != trunc(num)) ? "f" : ".0f") << std::endl;
-	}
 	else
-	{
 		std::cout << "float: " << "impossible" << std::endl;
-	}
 }
 
 void cast_double(std::string val)
@@ -74,13 +76,9 @@ void cast_double(std::string val)
 	double num;
 
 	if (ss >> num)
-	{
 		std::cout << "double: " << num << ((num != trunc(num)) ? "" : ".0") << std::endl;
-	}
 	else
-	{
 		std::cout << "double: " << "impossible" << std::endl;
-	}
 }
 
 
@@ -91,19 +89,14 @@ void display(e_type type, std::string val)
 	// if double -> cast double
 		// each of them will check char
 	// if char -> cast char and run the rest
-	// if (type == e_char)
-	// 	cast_char(type, val, 0);
-	// else
-	// {
-	// 	cast_int(type, val);
-	// 	cast_float(val);
-	// 	cast_double(val);
-	// }
 	if (type == e_char)
 		cast_char(type, val, 0);
-	cast_int(type, val);
-	cast_float(val);
-	cast_double(val);
+	else
+	{
+		cast_int(type, val);
+		cast_float(val);
+		cast_double(val);
+	}
 }
 
 void ScalarConverter::convert(std::string input)
