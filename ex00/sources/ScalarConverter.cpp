@@ -12,10 +12,6 @@
 
 #include "ScalarConverter.hpp"
 
-void cast_float(std::string val);
-void cast_double(std::string val);
-void cast_int(e_type type, std::string val);
-
 void cast_char(e_type type, std::string val, int x)
 {
 	char c;
@@ -81,6 +77,27 @@ void cast_double(std::string val)
 		std::cout << "double: " << "impossible" << std::endl;
 }
 
+void printer(std::string type, std::string msg)
+{
+
+}
+
+// To do: handle inf and nan with/without f suffix
+void special_handler(std::string val)
+{
+	if (val.substr(1, 4) == "inf")
+	{
+		printer("char: ", "impossible");
+		printer("int: ", "impossible");
+		printer("float: ", val);
+		printer("double: ", val);
+	}
+	if (val.substr(0, 3) == "nan")
+	{
+
+	}
+	else if (val.substr(0, 2))
+}
 
 void display(e_type type, std::string val)
 {
@@ -89,6 +106,8 @@ void display(e_type type, std::string val)
 	// if double -> cast double
 		// each of them will check char
 	// if char -> cast char and run the rest
+	if (type == e_special)
+
 	if (type == e_char)
 		cast_char(type, val, 0);
 	else

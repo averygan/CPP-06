@@ -53,5 +53,8 @@ public:
 int		is_int(std::string input);
 int		is_double_or_float(std::string input);
 e_type	type_checker(std::string input);
+void 	cast_float(std::string val);
+void 	cast_double(std::string val);
+void 	cast_int(e_type type, std::string val);
 
 #endif
