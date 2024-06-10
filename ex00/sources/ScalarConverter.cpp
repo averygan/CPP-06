@@ -12,10 +12,37 @@
 
 #include "ScalarConverter.hpp"
 
+// Constructors
+ScalarConverter::ScalarConverter()
+{
+	std::cout << "ScalarConverter Default Constructor called" << std::endl;
+}
+
+ScalarConverter::ScalarConverter(const ScalarConverter &copy)
+{
+	std::cout << "ScalarConverter Copy Constructor called" << std::endl;
+	*this = copy;
+}
+
+// Destructor
+ScalarConverter::~ScalarConverter()
+{
+	std::cout << "ScalarConverter Destructor called" << std::endl;
+}
+
+// Operator overload
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &copy)
+{
+	std::cout << "ScalarConverter Assignment operator called" << std::endl;
+	if (this == &copy)
+		return *this;
+	return *this;
+}
+
 /* if char type -> cast 
 - if type != char, check if within char min/max and cast 
-- if displayable, print c
-- if not displayable, print err */
+	- if displayable, print c
+	- if non-displayable, print err */
 void cast_char(e_type type, std::string val, int x)
 {
 	char c;
@@ -50,18 +77,17 @@ void cast_int(e_type type, std::string val)
 	std::stringstream ss (val);
 	int num;
 
-	std::cout << "int: ";
 	if (ss >> num)
 	{
-		if (type == e_int)
+		if (type != e_char)
 			cast_char(type, val, num);
-		std::cout << num << std::endl;
+		std::cout << "int: " << num << std::endl;
 	}
 	else
 	{
-		if (type == e_int)
+		if (type != e_char)
 			cast_char(type, val, num);
-		std::cout << "impossible" << std::endl;
+		std::cout << "int: " << "impossible" << std::endl;
 	}
 }
 
@@ -70,11 +96,13 @@ void cast_float(std::string val)
 	std::stringstream ss (val);
 	float num;
 
-	std::cout << "float: " << std::setprecision(7);
 	if (ss >> num)
-		std::cout << num << ((num != trunc(num)) ? "f" : ".0f") << std::endl;
+	{
+		std::cout << "float: " << std::setprecision(7) << \
+			num << ((num != trunc(num)) ? "f" : ".0f") << std::endl;
+	}
 	else
-		std::cout << "impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
 }
 
 void cast_double(std::string val)
@@ -82,11 +110,13 @@ void cast_double(std::string val)
 	std::stringstream ss (val);
 	double num;
 
-	std::cout << "double: " << std::setprecision(15);	
 	if (ss >> num)
-		std::cout << num << ((num != trunc(num)) ? "" : ".0") << std::endl;
+	{
+		std::cout << "double: " << std::setprecision(15) << \
+			num << ((num != trunc(num)) ? "" : ".0") << std::endl;
+	}
 	else
-		std::cout << "impossible" << std::endl;
+		std::cout << "double: impossible" << std::endl;
 }
 
 void printer(std::string type, std::string msg)
@@ -94,7 +124,7 @@ void printer(std::string type, std::string msg)
 	std::cout << type << msg << std::endl;
 }
 
-// To do: handle inf and nan with/without f suffix
+// Handle inf and nan with/without f suffix
 void special_handler(std::string val)
 {
 	printer("char: ", "impossible");

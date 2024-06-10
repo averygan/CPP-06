@@ -40,13 +40,13 @@ enum e_type {e_char, e_int, e_float, e_double, e_special, e_invalid};
 class ScalarConverter
 {
 private:
-	// // Constructors
-	// ScalarConverter();
-	// ScalarConverter(const ScalarConverter &copy);
-	// // Destructor
-	// ~ScalarConverter();
-	// // Operator overload
-	// ScalarConverter &operator=(const ScalarConverter &copy);
+	// Constructors
+	ScalarConverter();
+	ScalarConverter(const ScalarConverter &copy);
+	// Destructor
+	~ScalarConverter();
+	// Operator overload
+	ScalarConverter &operator=(const ScalarConverter &copy);
 
 public:
 	static void convert(const std::string input);
