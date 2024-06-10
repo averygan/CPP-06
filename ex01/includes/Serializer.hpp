@@ -36,14 +36,14 @@
 # define WIDTH 20
 
 class Serializer {
-// private:
-	// // Constructors
-	// Serializer();
-	// Serializer(const Serializer &copy);
-	// // Destructor
-	// ~Serializer();
-	// // Operator overload
-	// Serializer &operator=(const Serializer &copy);
+private:
+	// Constructors
+	Serializer();
+	Serializer(const Serializer &copy);
+	// Destructor
+	~Serializer();
+	// Operator overload
+	Serializer &operator=(const Serializer &copy);
 
 public:
 	static uintptr_t serialize(Data* ptr);
