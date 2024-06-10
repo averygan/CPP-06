@@ -12,19 +12,28 @@
 
 #include "ScalarConverter.hpp"
 
+/* if char type -> cast 
+- if type != char, check if within char min/max and cast 
+- if displayable, print c
+- if not displayable, print err */
 void cast_char(e_type type, std::string val, int x)
 {
 	char c;
 
+	std::cout << "char: ";
 	if (type == e_char)
 		c = static_cast<char>(val[0]);
-	else
+	else if (x >= CHAR_MIN && x <= CHAR_MAX)
 		c = static_cast<char>(x);
-	std::cout << "char: ";
+	else
+	{
+		std::cout << "impossible" << std::endl;
+		return ;
+	}
 	if (c > 32 && c < 127)
 		std::cout << c << std::endl;
 	else
-		std::cout << "Non displayable" << std::endl;
+		std::cout << "non displayable" << std::endl;
 	if (type == e_char)
 	{
 		std::stringstream ss;
@@ -41,17 +50,18 @@ void cast_int(e_type type, std::string val)
 	std::stringstream ss (val);
 	int num;
 
+	std::cout << "int: ";
 	if (ss >> num)
 	{
 		if (type == e_int)
 			cast_char(type, val, num);
-		std::cout << "int: " << num << std::endl;
+		std::cout << num << std::endl;
 	}
 	else
 	{
 		if (type == e_int)
 			cast_char(type, val, num);
-		std::cout << "int: " << "impossible" << std::endl;
+		std::cout << "impossible" << std::endl;
 	}
 }
 
@@ -60,10 +70,11 @@ void cast_float(std::string val)
 	std::stringstream ss (val);
 	float num;
 
+	std::cout << "float: " << std::setprecision(7);
 	if (ss >> num)
-		std::cout << "float: " << num << ((num != trunc(num)) ? "f" : ".0f") << std::endl;
+		std::cout << num << ((num != trunc(num)) ? "f" : ".0f") << std::endl;
 	else
-		std::cout << "float: " << "impossible" << std::endl;
+		std::cout << "impossible" << std::endl;
 }
 
 void cast_double(std::string val)
@@ -71,44 +82,46 @@ void cast_double(std::string val)
 	std::stringstream ss (val);
 	double num;
 
+	std::cout << "double: " << std::setprecision(15);	
 	if (ss >> num)
-		std::cout << "double: " << num << ((num != trunc(num)) ? "" : ".0") << std::endl;
+		std::cout << num << ((num != trunc(num)) ? "" : ".0") << std::endl;
 	else
-		std::cout << "double: " << "impossible" << std::endl;
+		std::cout << "impossible" << std::endl;
 }
 
 void printer(std::string type, std::string msg)
 {
-
+	std::cout << type << msg << std::endl;
 }
 
 // To do: handle inf and nan with/without f suffix
 void special_handler(std::string val)
 {
-	if (val.substr(1, 4) == "inf")
+	printer("char: ", "impossible");
+	printer("int: ", "impossible");
+	if (val.substr(1, 3) == "inf")
 	{
-		printer("char: ", "impossible");
-		printer("int: ", "impossible");
-		printer("float: ", val);
-		printer("double: ", val);
+		printer("float: ", val.substr(0, 4) + "f");
+		printer("double: ", val.substr(0, 4));
 	}
-	if (val.substr(0, 3) == "nan")
+	else if (val.substr(0, 3) == "nan")
 	{
-
+		printer("float: ", "nanf");
+		printer("double: ", "nan");
 	}
-	else if (val.substr(0, 2))
 }
 
+// if special -> print from special handler
+// if int -> cast int
+// if float -> cast float
+// if double -> cast double
+	// each of them will check char
+// if char -> cast char and run the rest
 void display(e_type type, std::string val)
 {
-	// if int -> cast int
-	// if float -> cast float
-	// if double -> cast double
-		// each of them will check char
-	// if char -> cast char and run the rest
 	if (type == e_special)
-
-	if (type == e_char)
+		special_handler(val);
+	else if (type == e_char)
 		cast_char(type, val, 0);
 	else
 	{
@@ -121,20 +134,10 @@ void display(e_type type, std::string val)
 void ScalarConverter::convert(std::string input)
 {
     e_type type = type_checker(input);
-    std::cout << "input type is ";
-    if (type == e_char)
-        std::cout << "e_char";
-    else if (type == e_int)
-        std::cout << "e_int";
-    else if (type == e_special)
-        std::cout << "e_special";
-    else if (type == e_float)
-        std::cout << "e_float";
-    else if (type == e_double)
-        std::cout << "e_double";
-    else
-        std::cout << "e_invalid";
-    std::cout << std::endl;
 
-    display(type, input);
+    if (type != e_invalid)
+    	display(type, input);
+    else
+    	std::cout << RED << "invalid argument: not type of char/int/float/double" 
+    	<< RESET << std::endl;
 }

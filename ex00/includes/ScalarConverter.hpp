@@ -19,6 +19,8 @@
 #include <iostream>
 #include <sstream>
 #include <cmath>
+#include <iomanip>
+#include <climits>
 
 # define BROWN "\033[1;33m"
 # define RED "\033[1;31m"
