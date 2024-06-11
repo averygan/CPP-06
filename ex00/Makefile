@@ -14,7 +14,7 @@
 NAME	= convert
 
 # compiler
-CC		= g++
+CC		= c++
 CFLAGS	= -Wall -Wextra -Werror -std=c++98 -Wshadow -Wno-shadow -g
 RM		= rm -fr
 
