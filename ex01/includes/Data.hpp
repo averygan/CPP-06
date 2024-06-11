@@ -10,8 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef __DATA_HPP__
+#define __DATA_HPP__
+
 #include "Serializer.hpp"
 
 struct Data {
 	int value;
 };
+
+#endif

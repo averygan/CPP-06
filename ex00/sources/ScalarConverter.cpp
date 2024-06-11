@@ -58,7 +58,7 @@ void cast_char(e_type type, std::string val, int x)
 		return ;
 	}
 	if (c > 32 && c < 127)
-		std::cout << c << std::endl;
+		std::cout << "'" << c << "'" << std::endl;
 	else
 		std::cout << "non displayable" << std::endl;
 	if (type == e_char)
